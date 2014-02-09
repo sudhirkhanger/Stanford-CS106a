@@ -52,11 +52,11 @@ public class Hangman extends ConsoleProgram {
     		if (match == false) {
     			println("There are no " + userGuess + "'s" + " in the word.");
     			incorrectGuesses++;
-    			canvas.noteIncorrectGuess(userGuess);
+    			canvas.noteIncorrectGuess(userGuess, incorrectGuesses);
     		/* Let user know of correct guess */	
     		} else {
     			println("That guess is correct.");
-    			canvas.displayWord(word);
+    			canvas.displayWord(dash);
     		}
     			
     		/* Execute when only guess is left */
@@ -78,7 +78,7 @@ public class Hangman extends ConsoleProgram {
     private String wordFromList() {
     	HangmanLexicon word = new HangmanLexicon();
 		int index = rgen.nextInt(0, word.getWordCount() - 1);
-		return(word.getWord(4));
+		return(word.getWord(index));
     }
     
     /* Ask user letter
