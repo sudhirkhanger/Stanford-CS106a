@@ -24,7 +24,8 @@ public class HangmanCanvas extends GCanvas {
 		int y = getHeight() / 10;
 		correctWord.setLocation(1.2*x, 9.25*y);
 		correctWord.setFont("SansSerif-bold-20");
-		remove(correctWord);
+		GObject element = getElementAt(1.2*x, 9.25*y);
+		if (element != null) remove(element);
 		add(correctWord);
 	}
 
@@ -34,13 +35,42 @@ public class HangmanCanvas extends GCanvas {
  * on the scaffold and adds the letter to the list of incorrect
  * guesses that appears at the bottom of the window.
  */
-	public void noteIncorrectGuess(char letter) {
+	public void noteIncorrectGuess(char letter, int num) {
 		result = result + letter;
 		GLabel incorrectLetter = new GLabel(result);
 		int x = getWidth() / 10;
 		int y = getHeight() / 10;
 		incorrectLetter.setLocation(1.2*x, 9.5*y);
 		add(incorrectLetter);
+		
+		/* create the hangman figure */
+		switch(num) {
+			case 1:
+				// head
+				break;
+			case 2:
+				// body
+				break;
+			case 3:
+				// left arm
+				break;
+			case 4:
+				// right arm
+				break;
+			case 5:
+				// left leg
+				break;
+			case 6:
+				// right leg
+				break;
+			case 7:
+				// left foot
+				break;
+			case 8:
+				// right foot
+				break;
+		}
+		
 	}
 
 /* Constants for the simple version of the picture (in pixels) */
