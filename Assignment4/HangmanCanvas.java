@@ -11,6 +11,7 @@ public class HangmanCanvas extends GCanvas {
 /** Resets the display so that only the scaffold appears */
 	public void reset() {
 		removeAll();
+		gameSetup();
 	}
 
 /**
@@ -47,32 +48,117 @@ public class HangmanCanvas extends GCanvas {
 		switch(num) {
 			case 1:
 				// head
+				head();
 				break;
 			case 2:
 				// body
+				body();
 				break;
 			case 3:
 				// left arm
+				leftArm();
 				break;
 			case 4:
 				// right arm
+				rightArm();
 				break;
 			case 5:
 				// left leg
+				leftLeg();
 				break;
 			case 6:
 				// right leg
+				rightLeg();
 				break;
 			case 7:
 				// left foot
+				leftFoot();
 				break;
 			case 8:
 				// right foot
+				rightFoot();
 				break;
 		}
 		
 	}
+	
+	private void gameSetup() {
+		int x = (getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2;
+		int y = (getHeight() + (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2;
+		int y1 = (getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2;
+		// add scaffold
+		add(new GLine(x, y, x, y1));
+		// add beam
+		int x1 = x + BEAM_LENGTH;
+		add(new GLine(x, y1, x1, y1));
+		// add rope
+		int y2 = y1 + ROPE_LENGTH;
+		add(new GLine(x1, y1, x1, y2));
+	}
+	
+	private void head() {
+		int x = ((getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2) + BEAM_LENGTH - HEAD_RADIUS;
+		int y = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH;
+		add(new GOval(x, y, 2 * HEAD_RADIUS, 2 * HEAD_RADIUS));
+	}
+	
+	private void body() {
+		int x = ((getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2) + BEAM_LENGTH;
+		int y = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS);
+		int y1 = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + BODY_LENGTH;
+		add(new GLine(x, y, x, y1));
+		int x1 = x - (HIP_WIDTH/2);
+		int x2 = x + (HIP_WIDTH/2);
+		add(new GLine(x1, y1, x2, y1));
+	}
+	
+	private void leftArm() {
+		int x = ((getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2) + BEAM_LENGTH;
+		int y = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + ARM_OFFSET_FROM_HEAD;
+		int x1 = x - UPPER_ARM_LENGTH;
+		add(new GLine(x, y, x1, y));
+		int y1 = y + LOWER_ARM_LENGTH;
+		add(new GLine(x1, y, x1, y1));
+		
+	}
+	
+	private void rightArm() {
+		int x = ((getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2) + BEAM_LENGTH;
+		int y = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + ARM_OFFSET_FROM_HEAD;
+		int x1 = x + UPPER_ARM_LENGTH;
+		add(new GLine(x, y, x1, y));
+		int y1 = y + LOWER_ARM_LENGTH;
+		add(new GLine(x1, y, x1, y1));
+	}
+	
+	private void leftLeg() {
+		int x = ((getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2) + BEAM_LENGTH - (HIP_WIDTH/2);
+		int y = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + BODY_LENGTH;
+		int y1 = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + BODY_LENGTH + LEG_LENGTH;
+		add(new GLine(x, y, x, y1));
+	}
+	
+	private void rightLeg() {
+		int x = ((getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2) + BEAM_LENGTH + (HIP_WIDTH/2);
+		int y = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + BODY_LENGTH;
+		int y1 = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + BODY_LENGTH + LEG_LENGTH;
+		add(new GLine(x, y, x, y1));
+	}
+	
+	private void leftFoot() {
+		int x = ((getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2) + BEAM_LENGTH - (HIP_WIDTH/2);
+		int y = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + BODY_LENGTH + LEG_LENGTH;
+		int x1 = x - FOOT_LENGTH;
+		add(new GLine(x, y, x1, y));
+		}
 
+	private void rightFoot() {
+		int x = ((getWidth() - (BEAM_LENGTH + UPPER_ARM_LENGTH))/2) + BEAM_LENGTH + (HIP_WIDTH/2);
+		int y = ((getHeight() - (ROPE_LENGTH + (HEAD_RADIUS * 2) + BODY_LENGTH + LEG_LENGTH) )/2) + ROPE_LENGTH  + (2 * HEAD_RADIUS) + BODY_LENGTH + LEG_LENGTH;
+		int x1 = x + FOOT_LENGTH;
+		add(new GLine(x, y, x1, y));
+	}
+	
 /* Constants for the simple version of the picture (in pixels) */
 	private static final int SCAFFOLD_HEIGHT = 360;
 	private static final int BEAM_LENGTH = 144;

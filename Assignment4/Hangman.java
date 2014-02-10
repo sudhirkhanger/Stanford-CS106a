@@ -13,7 +13,6 @@ import acm.util.*;
 import java.awt.*;
 
 public class Hangman extends ConsoleProgram {
-	
 	public void init() { 
 		 canvas = new HangmanCanvas(); 
 		 add(canvas); 
@@ -23,10 +22,8 @@ public class Hangman extends ConsoleProgram {
     	canvas.reset();
     	hangmanWord = wordFromList();
     	String dash = dash();
-    	String word = "";
     	
     	println("Welcome to Hangman!");
-    	println(hangmanWord + " is " + hangmanWord.length() + " letters long.");
     	println("The word now looks like this: " + dash);
     	println("You have " + maxIncorrectGuesses + " guesses left.");
     	
@@ -42,7 +39,6 @@ public class Hangman extends ConsoleProgram {
     					if (dash.charAt(i) == '-') {
     						correctGuess++;
     						dash = dash.substring(0, i) + hangmanChar + dash.substring(i+1);
-    			    		word = word + hangmanChar;
     					}
     					match = true;
     				}
@@ -89,6 +85,7 @@ public class Hangman extends ConsoleProgram {
     private char userGuess() {
     	while (true) {
     		String str = readLine("Your guess: ");
+    		if (str.length() !=1 ) println("Illegal Guess!");
     		
     		/* Make sure string is a single character */
     		while (str.length() != 1) {
