@@ -1,5 +1,6 @@
 /*
  * File: HangmanCanvas.java
+ * Name: Sudhir Khanger
  * ------------------------
  * This file keeps track of the Hangman display.
  */
