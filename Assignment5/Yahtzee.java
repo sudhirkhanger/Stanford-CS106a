@@ -31,6 +31,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		for(int i = 0; i < N_SCORING_CATEGORIES; i++) {
 			turn();
 		}
+		totalScore();
 	}
 	
 	/* Each player gets a turn in each single round.
@@ -42,13 +43,6 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		reroll();
 		reroll();
 		selectCategory();
-	/*	int category = display.waitForPlayerToSelectCategory();
-		if (YahtzeeMagicStub.checkCategory(dice, category)) {
-			display.updateScorecard(category, nPlayers, 50);
-		} else {
-			display.updateScorecard(category, nPlayers, WRONG_CATEGORY_SCORE);
-		}
-	*/
 	}
 	
 	/* First roll resets all dice values
@@ -83,8 +77,15 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		display.displayDice(dice);
 	}
 	
+	/* 
+	 * Decides the appropriate category score
+	 */
 	private void selectCategory() {
-		int category = display.waitForPlayerToSelectCategory();
+		int category = display.waitForPlayerToSelectCategory();	
+		while (score[category - 1] != 0) {
+			display.printMessage("Choose a different category");
+			category = display.waitForPlayerToSelectCategory();
+		}
 			if (YahtzeeMagicStub.checkCategory(dice, category)) {
 				switch (category) {
 					case 1:
@@ -96,25 +97,25 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 						display.updateScorecard(category, nPlayers, oneToSixScore(category)); 
 						score[category - 1] = oneToSixScore(category);
 						break;
-					case 7: 	// Three of a Kind
-					case 8:		// Four of a Kind
-					case 13:	// Chance
+					case 9: 	// Three of a Kind
+					case 10:		// Four of a Kind
+					case 15:	// Chance
 						display.updateScorecard(category, nPlayers, sumOfAllDices());
 						score[category - 1] = sumOfAllDices();
 						break;
-					case 9:		// Full House
+					case 11:		// Full House
 						display.updateScorecard(category, nPlayers, FULL_HOUSE_SCORE);
 						score[category - 1] = FULL_HOUSE_SCORE;
 						break; 	
-					case 10:	// Small Straight
+					case 12:	// Small Straight
 						display.updateScorecard(category, nPlayers, SMALL_STRAIGHT_SCORE);
 						score[category - 1] = SMALL_STRAIGHT_SCORE;
 						break;
-					case 11:	// Large Straight
+					case 13:	// Large Straight
 						display.updateScorecard(category, nPlayers, LARGE_STRAIGHT_SCORE);
 						score[category - 1] = LARGE_STRAIGHT_SCORE;
 						break;
-					case 12:	// Yahtzee
+					case 14:	// Yahtzee
 						display.updateScorecard(category, nPlayers, YAHTZEE_SCORE);
 						score[category - 1] = YAHTZEE_SCORE;
 						break;
@@ -122,7 +123,9 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			} else {
 				display.updateScorecard(category, nPlayers, WRONG_CATEGORY_SCORE);
 				score[category - 1] = WRONG_CATEGORY_SCORE;
-			}
+		}
+		/* Update total score*/
+			display.updateScorecard(TOTAL, nPlayers, categoryScore());
 	}
 	
 	/* Counts all instances of a category
@@ -145,6 +148,44 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		return(total);
 	}
 	
+	/* Total score including upper, lower and bonus */
+	private void totalScore() {
+		int bonus = 0;
+		if (upperScore() >= UPPERSCORE_SCORE) bonus = BONUS_SCORE;
+		int total = upperScore() + lowerScore() + bonus;
+		display.updateScorecard(UPPER_SCORE, nPlayers, upperScore()); 	// upper score
+		display.updateScorecard(UPPER_BONUS, nPlayers, bonus);			// upper bonus
+		display.updateScorecard(LOWER_SCORE, nPlayers, lowerScore());	// lower score
+		display.updateScorecard(TOTAL, nPlayers, total);				// total
+	}
+	
+	/* Total sum of all category scores*/
+	private int categoryScore() {
+		int total = 0;
+		for(int i = 0; i < N_SCORING_CATEGORIES; i++) {
+			total += score[i];
+		}
+		return(total);
+	}
+	
+	/* Sum of categories between One and Six */
+	private int upperScore() {
+		int total = 0;
+			for(int i = ONES - 1; i < SIXES; i++) {
+				total += score[i];
+			}
+			return(total);
+	}
+	
+	/* Sum of categories between Three of a kind and Chance */
+	private int lowerScore() {
+		int total = 0;
+			for(int i = THREE_OF_A_KIND - 1; i < CHANCE; i++) {
+				total += score[i];
+			}
+			return(total);
+	}
+	
 	/* Cheatmode makes it possible
 	 * to let user define the dice value
 	 * in order to test game for all
@@ -161,7 +202,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 	}
 		
 /* Private instance variables */
-	private int[] score = new int[N_SCORING_CATEGORIES];
+	private int[] score = new int[N_CATEGORIES];
 	private int[] dice = new int[N_DICE];
 	private int nPlayers;
 	private String[] playerNames;

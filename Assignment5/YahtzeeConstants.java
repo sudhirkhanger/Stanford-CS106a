@@ -32,6 +32,8 @@ public interface YahtzeeConstants {
 	public static final int SMALL_STRAIGHT_SCORE = 30;
 	public static final int LARGE_STRAIGHT_SCORE = 40;
 	public static final int YAHTZEE_SCORE = 50;
+	public static final int UPPERSCORE_SCORE = 63;
+	public static final int BONUS_SCORE = 35;
 
 /** The constants that specify categories on the scoresheet */
 	public static final int ONES = 1;
