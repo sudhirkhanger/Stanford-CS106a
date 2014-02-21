@@ -3,6 +3,7 @@
  * Name: Sudhir Khanger
  * ------------------
  * This program will eventually play the Yahtzee game.
+ * Note: Skipping the magic stub as logic is pretty straight.
  */
 
 import acm.io.*;
@@ -76,11 +77,9 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		display.waitForPlayerToSelectDice();
 			for(int i = 0; i < N_DICE; i++) {
 				if (display.isDieSelected(i)) {
-					/* Following will be in the main program.
 					dice[i] = rgen.nextInt(1, 6);
-					*/
 					// cheat mode
-					dice[i] = cheatMode(i);
+				//	dice[i] = cheatMode(i);
 				}
 			}
 		display.displayDice(dice);
