@@ -41,7 +41,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		for (int k = 1; k <= nPlayers; k++) {
 			totalScore(k);
 		}
-		display.printMessage("Congratualtions, " + playerNames[winner()] + ", you are the winner with a total score of " + score[TOTAL - 1][winner()] + "!");
+		display.printMessage("Congratulations, " + playerNames[winner()] + ", you are the winner with a total score of " + score[TOTAL - 1][winner()] + "!");
 	}
 	
 	/* Each player gets a turn in each single round.
@@ -229,6 +229,8 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 	 * to let user define the dice value
 	 * in order to test game for all
 	 * possible outcomes. 
+	 * *****
+	 * Not used just leaving it here for fun.
 	 */
 	private int cheatMode(int i) {
 		IODialog dialog = getDialog();
