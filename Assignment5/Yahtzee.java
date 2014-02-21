@@ -197,6 +197,9 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			return(total);
 	}
 	
+	/* Find the user with max score
+	 * Skip if playing single player
+	 */
 	private int winner() {
 		int max = 0;
 		int winner = 0;
@@ -211,6 +214,11 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		return(winner);
 	}
 	
+	/* In order to make sure user can't enter
+	 * score in already filled cells and
+	 * since int gets automatically initilized
+	 * with 0, I chose -1 as sort of sentinel value
+	 */
 	private void initializeScore() {
 		for(int i = 0; i < N_CATEGORIES; i++) {
 			for(int j = 0; j < MAX_PLAYERS; j++)
