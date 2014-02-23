@@ -19,3 +19,5 @@ Assignment 03 - Breakout Game
 Assignment 04 - Hangman Game
 
 Assignment 05 - Yahtzee Game
+
+Assignment 06 - NameSurfer
