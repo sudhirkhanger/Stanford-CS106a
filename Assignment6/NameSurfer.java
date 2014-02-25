@@ -46,8 +46,10 @@ public class NameSurfer extends ConsoleProgram implements NameSurferConstants {
 		// You fill this in //
 		// Respond to interactors
 		String cmd = e.getActionCommand();
-		if (cmd.equals("name") || e.getSource() == graph) println("Graph: " + "\"" + nameField.getText() + "\"");
-		if (e.getSource() == clear) println("Clear");
+		if ( !(nameField.getText().equals("")) ) {
+			if (cmd.equals("name") || e.getSource() == graph) println("Graph: " + "\"" + nameField.getText() + "\"");
+		}
+			if (e.getSource() == clear) println("Clear");
 	}
 	
 /* Private Instance Variables*/

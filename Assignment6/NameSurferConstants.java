@@ -1,5 +1,6 @@
 /*
  * File: NameSurferConstants.java
+ * Name: Sudhir Khanger
  * ------------------------------
  * This file declares several constants that are shared by the
  * different modules in the NameSurfer application.  Any class

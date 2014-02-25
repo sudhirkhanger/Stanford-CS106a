@@ -1,5 +1,6 @@
 /*
  * File: NameSurferEntry.java
+ * Name: Sudhir Khanger
  * --------------------------
  * This class represents a single entry in the database.  Each
  * NameSurferEntry contains a name and a list giving the popularity
@@ -20,6 +21,10 @@ public class NameSurferEntry implements NameSurferConstants {
  */
 	public NameSurferEntry(String line) {
 		// You fill this in //
+		StringTokenizer tokenizer = new StringTokenizer(line);
+		for (int i = 0; i <= NDECADES ; i++) {
+			myArr[i] = tokenizer.nextToken();
+		}
 	}
 
 /* Method: getName() */
@@ -28,7 +33,7 @@ public class NameSurferEntry implements NameSurferConstants {
  */
 	public String getName() {
 		// You need to turn this stub into a real implementation //
-		return null;
+		return myArr[0];
 	}
 
 /* Method: getRank(decade) */
@@ -41,7 +46,44 @@ public class NameSurferEntry implements NameSurferConstants {
  */
 	public int getRank(int decade) {
 		// You need to turn this stub into a real implementation //
-		return 0;
+		int i = (decade - START_DECADE) / 10;
+		int x = -1;
+		switch (i) {
+			case 0:
+				x = Integer.parseInt(myArr[1]);
+				break;
+			case 1:
+				x = Integer.parseInt(myArr[2]);
+				break;
+			case 2:
+				x = Integer.parseInt(myArr[3]);
+				break;
+			case 3:
+				x = Integer.parseInt(myArr[4]);
+				break;
+			case 4:
+				x = Integer.parseInt(myArr[5]);
+				break;
+			case 5:
+				x = Integer.parseInt(myArr[6]);
+				break;
+			case 6:
+				x = Integer.parseInt(myArr[7]);
+				break;
+			case 7:
+				x = Integer.parseInt(myArr[8]);
+				break;
+			case 8:
+				x = Integer.parseInt(myArr[9]);
+				break;
+			case 9:
+				x = Integer.parseInt(myArr[10]);
+				break;
+			case 10:
+				x = Integer.parseInt(myArr[11]);
+				break;
+		}
+		return x;
 	}
 
 /* Method: toString() */
@@ -51,7 +93,22 @@ public class NameSurferEntry implements NameSurferConstants {
  */
 	public String toString() {
 		// You need to turn this stub into a real implementation //
-		return "";
+		return ("Yearly rank of " + myArr[0] + " starting 1900 following each decade is " +
+				myArr[1] +
+				myArr[2] +
+				myArr[3] +
+				myArr[4] +
+				myArr[5] +
+				myArr[6] +
+				myArr[7] +
+				myArr[8] +
+				myArr[9] +
+				myArr[10] +
+				myArr[11]);
 	}
+	
+	/* Create a private instance variable
+	 *  to store name and popularity rank */
+	private String[] myArr = new String[NDECADES + 1];
 }
 
