@@ -19,8 +19,10 @@ public class NameSurferEntry implements NameSurferConstants {
  * followed by integers giving the rank of that name for each
  * decade.
  */
+	/* Tokenizes a line
+	 * and stores individual value
+	 * into an array*/
 	public NameSurferEntry(String line) {
-		// You fill this in //
 		StringTokenizer tokenizer = new StringTokenizer(line);
 		for (int i = 0; i <= NDECADES ; i++) {
 			myArr[i] = tokenizer.nextToken();
@@ -32,7 +34,6 @@ public class NameSurferEntry implements NameSurferConstants {
  * Returns the name associated with this entry.
  */
 	public String getName() {
-		// You need to turn this stub into a real implementation //
 		return myArr[0];
 	}
 
@@ -45,7 +46,6 @@ public class NameSurferEntry implements NameSurferConstants {
  * not appear in a decade, the rank value is 0.
  */
 	public int getRank(int decade) {
-		// You need to turn this stub into a real implementation //
 		int i = (decade - START_DECADE) / 10;
 		int x = -1;
 		switch (i) {
