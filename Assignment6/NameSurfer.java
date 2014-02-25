@@ -31,6 +31,10 @@ public class NameSurfer extends ConsoleProgram implements NameSurferConstants {
 		add(graph, NORTH);
 		add(clear, NORTH);
 		
+		// Reads the file
+	//	new NameSurferDataBase("names-data.txt");
+		db = new NameSurferDataBase("names-data.txt");
+		
 		// Call actionPerformed method
 		addActionListeners();
 		nameField.addActionListener(this);
@@ -47,7 +51,9 @@ public class NameSurfer extends ConsoleProgram implements NameSurferConstants {
 		// Respond to interactors
 		String cmd = e.getActionCommand();
 		if ( !(nameField.getText().equals("")) ) {
-			if (cmd.equals("name") || e.getSource() == graph) println("Graph: " + "\"" + nameField.getText() + "\"");
+			if (cmd.equals("name") || e.getSource() == graph) {
+				println((db.findEntry(nameField.getText())).toString());
+			}
 		}
 			if (e.getSource() == clear) println("Clear");
 	}
@@ -56,5 +62,5 @@ public class NameSurfer extends ConsoleProgram implements NameSurferConstants {
 	private JTextField nameField;
 	private JButton graph;
 	private JButton clear;
-	
+	private NameSurferDataBase db;
 }

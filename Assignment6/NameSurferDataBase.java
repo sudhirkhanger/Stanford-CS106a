@@ -1,5 +1,6 @@
 /*
  * File: NameSurferDataBase.java
+ * Name: Sudhir Khanger
  * -----------------------------
  * This class keeps track of the complete database of names.
  * The constructor reads in the database from a file, and
@@ -8,6 +9,12 @@
  * Names are matched independent of case, so that "Eric"
  * and "ERIC" are the same names.
  */
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.*;
+import java.io.*;
+import acm.util.*;
 
 public class NameSurferDataBase implements NameSurferConstants {
 	
@@ -19,7 +26,19 @@ public class NameSurferDataBase implements NameSurferConstants {
  * occurs as the file is being read.
  */
 	public NameSurferDataBase(String filename) {
-		// You fill this in //
+		try {
+			BufferedReader rd = new BufferedReader( new FileReader(filename));
+			
+			while (true) {
+				String line = rd.readLine();
+				if (line == null) break;
+				NameSurferEntry entry = new NameSurferEntry(line);
+				nameList.put(entry.getName(), entry);
+			}
+			rd.close();
+		} catch(IOException ex) {
+			throw new ErrorException(ex);
+		}
 	}
 	
 /* Method: findEntry(name) */
@@ -29,8 +48,10 @@ public class NameSurferDataBase implements NameSurferConstants {
  * method returns null.
  */
 	public NameSurferEntry findEntry(String name) {
-		// You need to turn this stub into a real implementation //
-		return null;
+		if (nameList.get(name) != null) return(nameList.get(name));
+		else return null;
 	}
+	
+/* Private instance variables*/
+	HashMap<String, NameSurferEntry> nameList = new HashMap<String, NameSurferEntry>();
 }
-
