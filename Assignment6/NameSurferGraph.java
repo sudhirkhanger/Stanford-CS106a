@@ -1,5 +1,6 @@
 /*
  * File: NameSurferGraph.java
+ * Name: Sudhir Khanger
  * ---------------------------
  * This class represents the canvas on which the graph of
  * names is drawn. This class is responsible for updating
@@ -26,7 +27,7 @@ public class NameSurferGraph extends GCanvas
 	* Clears the list of name surfer entries stored inside this class.
 	*/
 	public void clear() {
-		//	 You fill this in //
+		removeAll();
 	}
 	
 	/* Method: addEntry(entry) */
@@ -49,7 +50,17 @@ public class NameSurferGraph extends GCanvas
 	* the size of the canvas changes.
 	*/
 	public void update() {
-		//	 You fill this in //
+		clear();
+		// Create the background grid
+		int x = getWidth()/NDECADES;
+		int y0 = 0;
+		int y1 = getHeight();
+			for (int i = 0; i < NDECADES; i++) {
+				add(new GLine(i * x, y0, i * x, y1));
+			}
+		GLabel height = new GLabel("1900");
+		add(new GLine(0, 2 * height.getHeight(), getWidth(), 2 * height.getHeight()));
+		add(new GLine(0, getHeight() - (2 * height.getHeight()), getWidth(), getHeight() - (2 * height.getHeight())));
 	}
 	
 	
