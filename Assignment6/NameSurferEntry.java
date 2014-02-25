@@ -94,16 +94,16 @@ public class NameSurferEntry implements NameSurferConstants {
 	public String toString() {
 		// You need to turn this stub into a real implementation //
 		return ("Yearly rank of " + myArr[0] + " starting 1900 following each decade is " +
-				myArr[1] +
-				myArr[2] +
-				myArr[3] +
-				myArr[4] +
-				myArr[5] +
-				myArr[6] +
-				myArr[7] +
-				myArr[8] +
-				myArr[9] +
-				myArr[10] +
+				myArr[1] + " " +
+				myArr[2] + " " +
+				myArr[3] + " " +
+				myArr[4] + " " +
+				myArr[5] + " " +
+				myArr[6] + " " +
+				myArr[7] + " " +
+				myArr[8] + " " +
+				myArr[9] + " " +
+				myArr[10] + " " +
 				myArr[11]);
 	}
 	
