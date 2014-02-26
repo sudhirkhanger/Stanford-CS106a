@@ -65,6 +65,7 @@ public class NameSurfer extends Program implements NameSurferConstants {
 			}
 	}
 	
+	/* Changes the first letter of a word to upper case */
 	private String toUpperCase(String str){
 		String result = "";
 		char ch = str.charAt(0);
