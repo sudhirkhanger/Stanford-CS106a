@@ -53,22 +53,37 @@ public class NameSurferGraph extends GCanvas
 		int x = getWidth()/NDECADES;
 		int y0 = 0;
 		int y1 = getHeight();
-		int z = getHeight()/MAX_RANK;
 		GLabel word = new GLabel("1900");
 			for (int i = 0; i < NDECADES; i++) {
-				add(new GLine(i * x, y0, i * x, y1));
-				add(new GLabel((Integer.toString((i*10) + START_DECADE)), (i * x) + word.getWidth(), getHeight() - word.getHeight()/2));
+				add(new GLine(i*x, y0, i*x, y1));
+				add(new GLabel((Integer.toString((i*10) + START_DECADE)), (i*x) + word.getWidth(), getHeight() - word.getHeight()/2));
 			}
-		add(new GLine(0, GRAPH_MARGIN_SIZE, getWidth(), GRAPH_MARGIN_SIZE));
-		add(new GLine(0, getHeight() - GRAPH_MARGIN_SIZE, getWidth(), getHeight() - GRAPH_MARGIN_SIZE));
-	
+		add(new GLine(0, GRAPH_MARGIN_SIZE, getWidth(), GRAPH_MARGIN_SIZE));			// Top Line
+		add(new GLine(0, y1-GRAPH_MARGIN_SIZE, getWidth(), y1-GRAPH_MARGIN_SIZE));		// Bottom Line
+		
 			for (int i = 0; i < addEntryList.size(); i ++) {
 				for (int j = 0; j < NDECADES; j++) {
-					add(new GLine(j*x, addEntryList.get(i).getRank((j*10)+1900), (j+1) * x, addEntryList.get(i).getRank( ((j*10)+1900) + 10 )));
-					add(new GLabel(addEntryList.get(i).getName(),j*x, addEntryList.get(i).getRank((j*10)+1900)));
+					double min = GRAPH_MARGIN_SIZE + word.getAscent();
+					double max = getHeight()- GRAPH_MARGIN_SIZE;
+					double totalHeight = max-min;
+					double factor = totalHeight/1000;
+					double z0 = addEntryList.get(i).getRank((j*10) + 1900); 
+					double z1 = addEntryList.get(i).getRank((j*10) + 1910);
+					double m = (z0 * factor) + min;
+					double n = (z1 * factor) + min;
+					if (z0 == 0) m = max;
+					if (z1 == 0) n = max;
+					
+					if (j == NDECADES -1) {
+						// Skip so no line is drawn after last point
+					} else {
+						GLine line = new GLine(j*x, m, (j+1)*x, n);
+						line.setColor(Color.RED);
+						add(line);
+					}
+						add(new GLabel(addEntryList.get(i).getName() + " " + Integer.toString((int) z0), j*x, m));
 				}
 			}
-		
 	}
 	
 	/* Implementation of the ComponentListener interface */
