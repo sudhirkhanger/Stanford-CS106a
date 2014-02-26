@@ -65,6 +65,7 @@ public class NameSurferGraph extends GCanvas
 			for (int i = 0; i < addEntryList.size(); i ++) {
 				for (int j = 0; j < NDECADES; j++) {
 					add(new GLine(j*x, addEntryList.get(i).getRank((j*10)+1900), (j+1) * x, addEntryList.get(i).getRank( ((j*10)+1900) + 10 )));
+					add(new GLabel(addEntryList.get(i).getName(),j*x, addEntryList.get(i).getRank((j*10)+1900)));
 				}
 			}
 		
