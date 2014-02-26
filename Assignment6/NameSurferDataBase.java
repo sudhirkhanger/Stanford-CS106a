@@ -28,7 +28,6 @@ public class NameSurferDataBase implements NameSurferConstants {
 	public NameSurferDataBase(String filename) {
 		try {
 			BufferedReader rd = new BufferedReader( new FileReader(filename));
-			
 			while (true) {
 				String line = rd.readLine();
 				if (line == null) break;
@@ -48,8 +47,11 @@ public class NameSurferDataBase implements NameSurferConstants {
  * method returns null.
  */
 	public NameSurferEntry findEntry(String name) {
-		if (nameList.get(name) != null) return(nameList.get(name));
-		else return null;
+		if (nameList.get(name) != null) {
+			return(nameList.get(name));
+		} else {
+			return null;
+		}
 	}
 	
 /* Private instance variables*/

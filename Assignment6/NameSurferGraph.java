@@ -37,10 +37,8 @@ public class NameSurferGraph extends GCanvas
 	* simply stores the entry; the graph is drawn by calling update.
 	*/
 	public void addEntry(NameSurferEntry entry) {
-		// You fill this in //
+		addEntryList.add(entry);
 	}
-	
-	
 	
 	/**
 	* Updates the display image by deleting all the graphical objects
@@ -55,20 +53,29 @@ public class NameSurferGraph extends GCanvas
 		int x = getWidth()/NDECADES;
 		int y0 = 0;
 		int y1 = getHeight();
+		int z = getHeight()/MAX_RANK;
+		GLabel word = new GLabel("1900");
 			for (int i = 0; i < NDECADES; i++) {
 				add(new GLine(i * x, y0, i * x, y1));
+				add(new GLabel((Integer.toString((i*10) + START_DECADE)), (i * x) + word.getWidth(), getHeight() - word.getHeight()/2));
 			}
-		GLabel height = new GLabel("1900");
-		add(new GLine(0, 2 * height.getHeight(), getWidth(), 2 * height.getHeight()));
-		add(new GLine(0, getHeight() - (2 * height.getHeight()), getWidth(), getHeight() - (2 * height.getHeight())));
+		add(new GLine(0, GRAPH_MARGIN_SIZE, getWidth(), GRAPH_MARGIN_SIZE));
+		add(new GLine(0, getHeight() - GRAPH_MARGIN_SIZE, getWidth(), getHeight() - GRAPH_MARGIN_SIZE));
+	
+			for (int i = 0; i < addEntryList.size(); i ++) {
+				for (int j = 0; j < NDECADES; j++) {
+					add(new GLine(j*x, addEntryList.get(i).getRank((j*10)+1900), (j+1) * x, addEntryList.get(i).getRank( ((j*10)+1900) + 10 )));
+				}
+			}
+		
 	}
-	
-	
-	
 	
 	/* Implementation of the ComponentListener interface */
 	public void componentHidden(ComponentEvent e) { }
 	public void componentMoved(ComponentEvent e) { }
 	public void componentResized(ComponentEvent e) { update(); }
 	public void componentShown(ComponentEvent e) { }
+	
+	/* Instance variable */
+	ArrayList<NameSurferEntry> addEntryList = new ArrayList<NameSurferEntry>();
 }

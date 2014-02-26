@@ -37,8 +37,7 @@ public class NameSurfer extends Program implements NameSurferConstants {
 		add(clearButton, NORTH);
 		
 		// Reads the file
-	//	new NameSurferDataBase("names-data.txt");
-	//	db = new NameSurferDataBase("names-data.txt");
+		db = new NameSurferDataBase("names-data.txt");
 		
 		// Call actionPerformed method
 		addActionListeners();
@@ -57,11 +56,12 @@ public class NameSurfer extends Program implements NameSurferConstants {
 		String cmd = e.getActionCommand();
 		if ( !(nameField.getText().equals("")) ) {
 			if (cmd.equals("name") || e.getSource() == graphButton) {
-	//			println((db.findEntry(nameField.getText())).toString());
+				graph.addEntry(db.findEntry(nameField.getText()));
+				graph.update();
 			}
 		}
 			if (e.getSource() == clearButton) {
-	//			println("Clear");
+				graph.clear();
 			}
 	}
 	
@@ -70,5 +70,5 @@ public class NameSurfer extends Program implements NameSurferConstants {
 	private JButton graphButton;
 	private JButton clearButton;
 	private NameSurferGraph graph;
-//	private NameSurferDataBase db;
+	private NameSurferDataBase db;
 }
