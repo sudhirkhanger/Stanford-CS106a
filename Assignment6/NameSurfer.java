@@ -56,13 +56,21 @@ public class NameSurfer extends Program implements NameSurferConstants {
 		String cmd = e.getActionCommand();
 		if ( !(nameField.getText().equals("")) ) {
 			if (cmd.equals("name") || e.getSource() == graphButton) {
-				graph.addEntry(db.findEntry(nameField.getText()));
+				graph.addEntry(db.findEntry(toUpperCase(nameField.getText())));
 				graph.update();
 			}
 		}
 			if (e.getSource() == clearButton) {
 				graph.clear();
 			}
+	}
+	
+	private String toUpperCase(String str){
+		String result = "";
+		char ch = str.charAt(0);
+		char strUpperCase = Character.toUpperCase(ch);
+		result = strUpperCase + str.substring(1);
+		return result;
 	}
 	
 /* Private Instance Variables*/
