@@ -64,6 +64,7 @@ public class NameSurfer extends Program implements NameSurferConstants {
 		}
 			if (e.getSource() == clearButton) {
 				graph.clear();
+				graph.update();
 			}
 	}
 	
