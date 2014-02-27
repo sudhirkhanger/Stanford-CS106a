@@ -56,7 +56,9 @@ public class NameSurfer extends Program implements NameSurferConstants {
 		String cmd = e.getActionCommand();
 		if ( !(nameField.getText().equals("")) ) {
 			if (cmd.equals("name") || e.getSource() == graphButton) {
-				graph.addEntry(db.findEntry(toUpperCase(nameField.getText())));
+				if (db.findEntry(toUpperCase(nameField.getText())) != null) {
+					graph.addEntry(db.findEntry(toUpperCase(nameField.getText())));
+				}
 				graph.update();
 			}
 		}
