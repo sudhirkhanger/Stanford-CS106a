@@ -26,8 +26,9 @@ public class NameSurferGraph extends GCanvas
 	/**
 	* Clears the list of name surfer entries stored inside this class.
 	*/
+	// clears the array of name surfer entries.
 	public void clear() {
-		removeAll();
+		addEntryList.clear();
 	}
 	
 	/* Method: addEntry(entry) */
@@ -58,7 +59,7 @@ public class NameSurferGraph extends GCanvas
 	* the size of the canvas changes.
 	*/
 	public void update() {
-		clear();
+		removeAll();
 		// Create the background grid
 		int x = getWidth()/NDECADES;
 		int y0 = 0;
