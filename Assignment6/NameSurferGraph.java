@@ -38,7 +38,16 @@ public class NameSurferGraph extends GCanvas
 	*/
 	public void addEntry(NameSurferEntry entry) {
 		// Adds the NameSurferEntry to an ArrayList
-		addEntryList.add(entry);
+		boolean match = false;
+			for (int i = 0; i < addEntryList.size(); i++) {
+				if (entry.equals(addEntryList.get(i))) {
+					match = true;
+				}
+			}
+		if (match == false ) {
+			addEntryList.add(entry);
+			match = false;
+		}
 	}
 	
 	/**
@@ -80,14 +89,7 @@ public class NameSurferGraph extends GCanvas
 					// As instruction says 0 is in bottom and not top
 					if (z0 == 0) m = max;
 					if (z1 == 0) n = max;
-					
-			//		int c;
-			//		if (i < 4) {
-			//			c = i;
-			//		} else {
-			//			c = colorChooser(i);
-			//		}
-					
+						
 					if (j == NDECADES -1) {
 						// Skip so no line is drawn after last point
 					} else {
@@ -111,7 +113,13 @@ public class NameSurferGraph extends GCanvas
 						}
 						add(line);
 					}
-						GLabel name = new GLabel(addEntryList.get(i).getName() + " " + Integer.toString((int) z0), j*x, m);
+						GLabel name;
+						if (z0 == 0) {
+							name = new GLabel(addEntryList.get(i).getName() + "*" + " " + Integer.toString((int) z0), j*x, m);
+						} else {
+							name = new GLabel(addEntryList.get(i).getName() + " " + Integer.toString((int) z0), j*x, m);
+						}
+						
 						switch (i % 4) {
 							case 0:
 								name.setColor(Color.BLACK);
@@ -130,7 +138,6 @@ public class NameSurferGraph extends GCanvas
 								break;
 						}
 						add(name);
-						add(new GLabel(Integer.toString(i%4), 100, 10*i));
 				}
 			}
 	}
