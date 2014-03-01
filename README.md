@@ -21,3 +21,5 @@ Assignment 04 - Hangman Game
 Assignment 05 - Yahtzee Game
 
 Assignment 06 - NameSurfer
+
+Assignment 07 - Face Pamphlet
