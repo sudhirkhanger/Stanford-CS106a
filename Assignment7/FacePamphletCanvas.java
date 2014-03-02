@@ -32,7 +32,7 @@ public class FacePamphletCanvas extends GCanvas
 	 * passed in.
 	 */
 	public void showMessage(String msg) {
-		// You fill this in
+		
 	}
 	
 	
@@ -46,8 +46,41 @@ public class FacePamphletCanvas extends GCanvas
 	 * the user, and a list of the user's friends in the social network.
 	 */
 	public void displayProfile(FacePamphletProfile profile) {
-		// You fill this in
+		// remove all objects from the canvas
+		removeAll();
+		
+		// add profile name
+		GLabel profileName = new GLabel(profile.getName());
+		profileName.setColor(Color.blue);
+		profileName.setFont(PROFILE_NAME_FONT);
+		add(profileName, LEFT_MARGIN, TOP_MARGIN);
+		
+		// No image rectangle
+		GRect rect = new GRect(IMAGE_WIDTH, IMAGE_HEIGHT);
+		add(rect, LEFT_MARGIN, TOP_MARGIN + IMAGE_MARGIN);
+		GLabel noImg = new GLabel("No Image");
+		noImg.setFont(PROFILE_IMAGE_FONT);
+		noImg.setLocation(LEFT_MARGIN + (IMAGE_WIDTH/2) - (noImg.getWidth()/2) , TOP_MARGIN + IMAGE_MARGIN + (IMAGE_HEIGHT/2) - (noImg.getAscent()/2));
+		add(noImg);
+		
+		// add image
+		if (profile.getImage() != null) {
+			GImage picture = profile.getImage();
+			picture.scale(IMAGE_WIDTH, IMAGE_HEIGHT);
+			picture.setSize(IMAGE_WIDTH, IMAGE_HEIGHT);
+			add(picture, LEFT_MARGIN, IMAGE_MARGIN);
+		}
+		
+		// status
+		GLabel status;
+		if (profile.getStatus().equals("")) {
+			status = new GLabel("No current status");
+		} else {
+			status = new GLabel(profile.getStatus());
+		}
+			status.setFont(PROFILE_STATUS_FONT);
+			status.setLocation(LEFT_MARGIN, rect.getY() + IMAGE_HEIGHT + STATUS_MARGIN - status.getAscent()/2 );
+			add(status);
 	}
-
 	
 }

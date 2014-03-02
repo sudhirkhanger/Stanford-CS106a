@@ -47,11 +47,8 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * returns the empty string ("").
 	 */ 
 	public String getStatus() {
-		if (profileStatus == null) {
-			return("");
-		} else {
-			return profileStatus;
-		}
+		if (profileStatus == null) profileStatus = "";
+		return profileStatus;
 	}
 	
 	/** This method sets the status associated with the profile. */ 
@@ -69,8 +66,13 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * a second time.)
 	 */
 	public boolean addFriend(FacePamphletProfile friend) {
-		friendList.add(friend);
-		return true;
+		if (!friendList.contains(friend)) {
+			friendList.add(friend);
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 
 	/** 
@@ -82,8 +84,12 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * the given friend name could not be removed.)
 	 */
 	public boolean removeFriend(FacePamphletProfile friend) {
+		if (friendList.contains(friend)) {
 			friendList.remove(friend);
 			return true;
+		} else {
+			return false;
+		}	
 	}
 
 	/** 
@@ -94,7 +100,11 @@ public class FacePamphletProfile implements FacePamphletConstants {
 		return friendList.iterator();
 	}
 	
-	private String friendListString() {
+	/* 
+	 * Concatenates all friend's names in a string
+	 * for toString() method.
+	 */
+	private String friendList() {
 		String result ="";
 		for (FacePamphletProfile profile:friendList){
 			String name = profile.getName();
@@ -115,7 +125,7 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * would return the string: "Alice (coding): Don, Chelsea, Bob"
 	 */ 
 	public String toString() {
-		return(getName() + " (" + getStatus() + "): " + friendListString());
+		return(getName() + " (" + getStatus() + "): " + friendList());
 	}
 	
 	private String profileName;

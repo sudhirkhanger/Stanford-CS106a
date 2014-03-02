@@ -28,9 +28,13 @@ public class FacePamphletDatabase implements FacePamphletConstants {
 	 * the new profile passed in.
 	 */
 	public void addProfile(FacePamphletProfile profile) {
-		masterList.put(profile.getName(), profile);
+		if (!masterList.containsKey(profile.getName())) {
+			masterList.put(profile.getName(), profile);
+		} else {
+			deleteProfile(profile.getName());
+			masterList.put(profile.getName(), profile);
+		}
 	}
-
 	
 	/** 
 	 * This method returns the profile associated with the given name 
@@ -57,11 +61,11 @@ public class FacePamphletDatabase implements FacePamphletConstants {
 	 */
 	public void deleteProfile(String name) {
 		FacePamphletProfile profileToBeDeleted = masterList.get(name);
-		Iterator it = profileToBeDeleted.getFriends();
+		Iterator<FacePamphletProfile> it = profileToBeDeleted.getFriends();
+			// Remove all instances of deleted profile from all other profiles.
 			while (it.hasNext()) {
 				FacePamphletProfile friendToRemoveProfileFrom = (FacePamphletProfile) it.next();
 				friendToRemoveProfileFrom.removeFriend(profileToBeDeleted);
-				
 			}
 		masterList.remove(name);
 	}
