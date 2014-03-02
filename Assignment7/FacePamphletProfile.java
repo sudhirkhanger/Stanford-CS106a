@@ -47,12 +47,16 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * returns the empty string ("").
 	 */ 
 	public String getStatus() {
-		return profileStatus;
+		if (profileStatus == null) {
+			return("");
+		} else {
+			return profileStatus;
+		}
 	}
 	
 	/** This method sets the status associated with the profile. */ 
 	public void setStatus(String status) {
-		profileStatus = status;
+			profileStatus = status;
 	}
 
 	/** 
@@ -64,14 +68,9 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * case, the given friend name is not added to the list of friends 
 	 * a second time.)
 	 */
-	public boolean addFriend(String friend) {
-		if (friendList.contains(friend)) {
-			return false;
-		} else {
-			friendList.add(friend);
-			(new FacePamphletDatabase()).masterList.get(friend).addFriend(getName());
-			return true;
-		}
+	public boolean addFriend(FacePamphletProfile friend) {
+		friendList.add(friend);
+		return true;
 	}
 
 	/** 
@@ -82,21 +81,26 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * was not in the list of friends for this profile (in which case,
 	 * the given friend name could not be removed.)
 	 */
-	public boolean removeFriend(String friend) {
-		if (friendList.contains(friend)) {
+	public boolean removeFriend(FacePamphletProfile friend) {
 			friendList.remove(friend);
 			return true;
-		} else {
-			return false;
-		}
 	}
 
 	/** 
 	 * This method returns an iterator over the list of friends 
 	 * associated with the profile.
 	 */ 
-	public Iterator<String> getFriends() {
+	public Iterator<FacePamphletProfile> getFriends() {
 		return friendList.iterator();
+	}
+	
+	private String friendListString() {
+		String result ="";
+		for (FacePamphletProfile profile:friendList){
+			String name = profile.getName();
+			result += name + " ";
+		}
+		return result;
 	}
 	
 	/** 
@@ -111,12 +115,11 @@ public class FacePamphletProfile implements FacePamphletConstants {
 	 * would return the string: "Alice (coding): Don, Chelsea, Bob"
 	 */ 
 	public String toString() {
-		return(profileName + "(" + profileStatus + "): " + friendList.iterator().toString());
+		return(getName() + " (" + getStatus() + "): " + friendListString());
 	}
 	
 	private String profileName;
 	private GImage profilePicture;
 	private String profileStatus;
-	private ArrayList<String> friendList = new ArrayList<String>();
-	
+	private ArrayList<FacePamphletProfile> friendList = new ArrayList<FacePamphletProfile>();
 }

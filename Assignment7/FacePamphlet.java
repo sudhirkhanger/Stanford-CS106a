@@ -11,6 +11,7 @@ import acm.graphics.*;
 import acm.util.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 public class FacePamphlet extends ConsoleProgram 
 					implements FacePamphletConstants {
@@ -64,35 +65,97 @@ public class FacePamphlet extends ConsoleProgram
      * to respond to these actions.
      */
     public void actionPerformed(ActionEvent e) {
+    	// Add Profile
     	if (!nameTextField.getText().equals("")) {
     		if (e.getSource() == addButton) {
-    			db.addProfile((new FacePamphletProfile(nameTextField.getText())));
-    			println("Add: " + nameTextField.getText());
-    		}
-    		if (e.getSource() == deleteButton) {
-    			db.deleteProfile(nameTextField.getText());
-    			println("Delete: " + nameTextField.getText());
-    		}
-    		
-    		if (e.getSource() == lookupButton) {
-    			if (db.getProfile(nameTextField.getText()) != null) {
-    				println("Lookup: " + nameTextField.getText());
+    			if (db.getProfile(nameTextField.getText()) == null) {
+    				println("Add: new profile: " + nameTextField.getText());
+    				db.addProfile((new FacePamphletProfile(nameTextField.getText())));
+    				
+    				currentProfile = db.getProfile(nameTextField.getText());
+    				println("--> Current profile: " + currentProfile.toString());
     			} else {
-    				println("Profile Not Found");
+    				println("Add: profile for " + db.getProfile(nameTextField.getText()).getName() + " already exist");
+    				
+    				currentProfile = db.getProfile(nameTextField.getText());
+    				println("--> Current profile: " + currentProfile.toString());
     			}
     		}
+    	
+    	// Delete Profile
+    	if (e.getSource() == deleteButton) {
+    		db.deleteProfile(nameTextField.getText());
+    		currentProfile = null;
+    		println("Delete: " + nameTextField.getText());
+    		println("--> No Current profile");
+    	}
+    	
+    	// Lookup Profile
+    	if (e.getSource() == lookupButton) {
+    		if (db.getProfile(nameTextField.getText()) != null) {
+    			println("Lookup: " + nameTextField.getText());
+    			currentProfile = db.getProfile(nameTextField.getText());
+    			println("--> Current profile: " + currentProfile.toString());
+    		} else {
+    			println("Profile Not Found");
+    			println("--> No Current profile");
+    			currentProfile = null;
+    		}
+    	}
+    	
     	}
 		// Change Status
 		if (e.getSource() == changeStatusButton || e.getSource() == changeStatusTextField) {
-			if (!changeStatusTextField.getText().equals("")) println("Change Status: " + changeStatusTextField.getText());
+			if (!changeStatusTextField.getText().equals("")) {
+				if (currentProfile != null) {
+					db.getProfile(nameTextField.getText()).setStatus(changeStatusTextField.getText());
+					println("Status updated to " + changeStatusTextField.getText());
+					println("--> Current profile: " + currentProfile.toString());
+				} else {
+					println("Select a profile to change status");
+					println("--> Current profile: " + currentProfile.toString());
+				}
+			}
 		}
 		// Change Picture
 		if (e.getSource() == changePictureButton || e.getSource() == changePictureTextField) {
-			if (!changePictureTextField.getText().equals("")) println("Change Picture: " + changePictureTextField.getText());
+			if (!changePictureTextField.getText().equals("")) {
+				if (currentProfile != null) {
+					GImage image = null; 
+					try { 
+						image = new GImage(changePictureTextField.getText()); 
+					} catch (ErrorException ex) { 
+
+					} 
+					if (image !=null) {
+						db.getProfile(nameTextField.getText()).setImage(image);
+						println("Picture updated");
+						println("--> Current profile: " + currentProfile.toString());
+					}
+				} else {
+					println("Select a profile to change status");
+					println("--> Current profile: " + currentProfile.toString());
+				}
+			}
 		}
 		// Add Friend
 		if (e.getSource() == addFriendButton || e.getSource() == addFriendTextField) {
-			if (!addFriendTextField.getText().equals("")) println("Add Friend: " + addFriendTextField.getText());
+			if (!addFriendTextField.getText().equals("")) {
+				if (currentProfile != null) {
+					if (db.getProfile(addFriendTextField.getText()) != null) {
+						db.getProfile(nameTextField.getText()).addFriend(db.getProfile(addFriendTextField.getText()));
+						db.getProfile(addFriendTextField.getText()).addFriend(db.getProfile(nameTextField.getText()));
+						println(addFriendTextField.getText() + " added as a friend");
+						println("--> Current profile: " + currentProfile.toString());
+					} else {
+						println("Profile doesn't exist");
+						println("--> Current profile: " + currentProfile.toString());
+					}
+				} else {
+					println("Select a profile to change status");
+					println("--> Current profile: " + currentProfile.toString());
+				}
+			}
 		}
 	}
     
@@ -108,4 +171,5 @@ public class FacePamphlet extends ConsoleProgram
     private JTextField changePictureTextField;
     private JTextField addFriendTextField;
     private FacePamphletDatabase db = new FacePamphletDatabase();
+    private FacePamphletProfile currentProfile;
 }

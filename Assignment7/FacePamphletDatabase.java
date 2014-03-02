@@ -28,11 +28,7 @@ public class FacePamphletDatabase implements FacePamphletConstants {
 	 * the new profile passed in.
 	 */
 	public void addProfile(FacePamphletProfile profile) {
-		if (masterList.containsKey(profile.getName())) {
-			masterList.remove(profile.getName());
-		} else {
-			masterList.put(profile.getName(), profile);
-		}
+		masterList.put(profile.getName(), profile);
 	}
 
 	
@@ -60,13 +56,15 @@ public class FacePamphletDatabase implements FacePamphletConstants {
 	 * the database is unchanged after calling this method.
 	 */
 	public void deleteProfile(String name) {
-		Iterator it = masterList.get(name).getFriends();
-		while (it.hasNext()) {
-			masterList.get(it.next()).removeFriend(name);
-		}
+		FacePamphletProfile profileToBeDeleted = masterList.get(name);
+		Iterator it = profileToBeDeleted.getFriends();
+			while (it.hasNext()) {
+				FacePamphletProfile friendToRemoveProfileFrom = (FacePamphletProfile) it.next();
+				friendToRemoveProfileFrom.removeFriend(profileToBeDeleted);
+				
+			}
 		masterList.remove(name);
 	}
-
 	
 	/** 
 	 * This method returns true if there is a profile in the database 
@@ -80,7 +78,10 @@ public class FacePamphletDatabase implements FacePamphletConstants {
 		}
 	}
 	
+	public Iterator<String> masterListIterator() {
+		return masterList.keySet().iterator();
+	}
+	
 	/* Private Instance Variables */
-	HashMap<String, FacePamphletProfile> masterList = new HashMap<String, FacePamphletProfile> ();
-
+	private HashMap<String, FacePamphletProfile> masterList = new HashMap<String, FacePamphletProfile>();
 }
