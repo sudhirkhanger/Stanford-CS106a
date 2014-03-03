@@ -28,12 +28,7 @@ public class FacePamphletDatabase implements FacePamphletConstants {
 	 * the new profile passed in.
 	 */
 	public void addProfile(FacePamphletProfile profile) {
-		if (!masterList.containsKey(profile.getName())) {
-			masterList.put(profile.getName(), profile);
-		} else {
-			deleteProfile(profile.getName());
-			masterList.put(profile.getName(), profile);
-		}
+		masterList.put(profile.getName(), profile);
 	}
 	
 	/** 

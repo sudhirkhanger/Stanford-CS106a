@@ -32,7 +32,12 @@ public class FacePamphletCanvas extends GCanvas
 	 * passed in.
 	 */
 	public void showMessage(String msg) {
-		
+		GLabel appMessage = new GLabel(msg);
+		appMessage.setFont(MESSAGE_FONT);
+		double x = (getWidth() - appMessage.getWidth())/2;
+		double y = getHeight() - BOTTOM_MESSAGE_MARGIN;
+		if (getElementAt(x, y) != null) remove(getElementAt(x, y));
+		add(appMessage, x, y);
 	}
 	
 	
@@ -49,38 +54,71 @@ public class FacePamphletCanvas extends GCanvas
 		// remove all objects from the canvas
 		removeAll();
 		
-		// add profile name
-		GLabel profileName = new GLabel(profile.getName());
-		profileName.setColor(Color.blue);
-		profileName.setFont(PROFILE_NAME_FONT);
-		add(profileName, LEFT_MARGIN, TOP_MARGIN);
-		
-		// No image rectangle
-		GRect rect = new GRect(IMAGE_WIDTH, IMAGE_HEIGHT);
-		add(rect, LEFT_MARGIN, TOP_MARGIN + IMAGE_MARGIN);
-		GLabel noImg = new GLabel("No Image");
-		noImg.setFont(PROFILE_IMAGE_FONT);
-		noImg.setLocation(LEFT_MARGIN + (IMAGE_WIDTH/2) - (noImg.getWidth()/2) , TOP_MARGIN + IMAGE_MARGIN + (IMAGE_HEIGHT/2) - (noImg.getAscent()/2));
-		add(noImg);
-		
-		// add image
-		if (profile.getImage() != null) {
-			GImage picture = profile.getImage();
-			picture.scale(IMAGE_WIDTH, IMAGE_HEIGHT);
-			picture.setSize(IMAGE_WIDTH, IMAGE_HEIGHT);
-			add(picture, LEFT_MARGIN, IMAGE_MARGIN);
-		}
-		
-		// status
-		GLabel status;
-		if (profile.getStatus().equals("")) {
-			status = new GLabel("No current status");
+		if (profile == null) {
+			removeAll();
 		} else {
-			status = new GLabel(profile.getStatus());
+			double x;
+			double y;
+			
+			// add profile name
+			GLabel profileName;
+			profileName = new GLabel(profile.getName());
+			profileName.setColor(Color.blue);
+			profileName.setFont(PROFILE_NAME_FONT);
+			x = LEFT_MARGIN;
+			y = TOP_MARGIN + profileName.getAscent();
+			add(profileName, x, y);
+			
+			// No image rectangle
+			GRect rect = new GRect(IMAGE_WIDTH, IMAGE_HEIGHT);
+			x = LEFT_MARGIN;
+			y = TOP_MARGIN + profileName.getAscent() + IMAGE_MARGIN;
+			add(rect, x, y );
+			GLabel noImg = new GLabel("No Image");
+			noImg.setFont(PROFILE_IMAGE_FONT);
+			x = LEFT_MARGIN + (IMAGE_WIDTH - noImg.getWidth())/2;
+			y = TOP_MARGIN + profileName.getAscent() + IMAGE_MARGIN + (IMAGE_HEIGHT + noImg.getAscent())/2;
+			add(noImg, x, y);
+			
+			// add image
+			if (profile.getImage() != null) {
+				GImage image = profile.getImage();
+				image.scale(IMAGE_WIDTH, IMAGE_HEIGHT);
+				image.setSize(IMAGE_WIDTH, IMAGE_HEIGHT);
+				x = LEFT_MARGIN;
+				y = TOP_MARGIN + profileName.getAscent() + IMAGE_MARGIN;
+				add(image, x, y);
+			}
+			
+			// status
+			GLabel status;
+			if (profile.getStatus().equals("")) {
+				status = new GLabel("No current status");
+			} else {
+				status = new GLabel(profile.getName() + " is " + profile.getStatus());
+			}
+				status.setFont(PROFILE_STATUS_FONT);
+				status.setLocation(LEFT_MARGIN, rect.getY() + IMAGE_HEIGHT + STATUS_MARGIN - status.getAscent()/2 );
+				x = LEFT_MARGIN;
+				y = TOP_MARGIN + profileName.getAscent() + IMAGE_MARGIN + IMAGE_HEIGHT + status.getAscent() + STATUS_MARGIN;
+				add(status, x, y);
+				
+			// Friends
+			GLabel friendLabel = new GLabel("Friends:");
+			friendLabel.setFont(PROFILE_FRIEND_LABEL_FONT);
+			x = getWidth()/2;
+			y = TOP_MARGIN + profileName.getAscent() + IMAGE_MARGIN;
+			add(friendLabel, x, y);
+			Iterator<FacePamphletProfile> it = profile.getFriends();
+				while (it.hasNext()) {
+					FacePamphletProfile friends = (FacePamphletProfile) it.next();
+					GLabel friendName = new GLabel(friends.getName());
+					friendName.setFont(PROFILE_FRIEND_FONT);
+					x = getWidth()/2;
+					y += friendName.getAscent();
+					add(friendName, x, y);
+				}
 		}
-			status.setFont(PROFILE_STATUS_FONT);
-			status.setLocation(LEFT_MARGIN, rect.getY() + IMAGE_HEIGHT + STATUS_MARGIN - status.getAscent()/2 );
-			add(status);
 	}
 	
 }

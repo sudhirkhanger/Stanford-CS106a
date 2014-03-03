@@ -72,7 +72,6 @@ public class FacePamphletProfile implements FacePamphletConstants {
 		} else {
 			return false;
 		}
-		
 	}
 
 	/** 
